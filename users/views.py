@@ -67,6 +67,7 @@ def user_login(request):
 
 @login_required
 def user_profile(request):
+    print(request)
 
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)

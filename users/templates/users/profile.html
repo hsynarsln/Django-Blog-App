@@ -14,13 +14,13 @@
   <div class="card-body">
     <dl class="row">
       <dt class="col-sm-4">
-        
-        {% if user.profile_pic %}
-        <img width="200rem" src="{% static 'media/profil_pics/profil_foto.jpg' %}" class="rounded" alt="User" /></dt>
-          {% else %}
-        <img width="200rem" src="{% static 'blog/images/default.png' %}" class="rounded" alt="User" /></dt>
-        {% endif %}
-          
+        {% if profile_form.instance.profile_pic %}
+        <img width="100rem" style="border-radius: 50%" src="{{ profile_form.instance.profile_pic.url }}" />
+        {% else %}
+        <img width="200rem" src="{% static 'blog/images/default.png' %}" class="rounded" alt="User" />
+      </dt>
+      {% endif %}
+
       <dd class="col-sm-8 display-1">{{ user.username }}</dd>
     </dl>
 
@@ -29,7 +29,10 @@
     <hr />
     <div class="form-content">
       <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %} {{ user_form | crispy }} {{ profile_form | crispy }}
+        {% csrf_token %} {{ user_form | crispy }}
+        <label class="big mb-1">Currently:</label>
+        <a href="{{ profile_form.instance.profile_pic.url }}">{{ profile_form.instance.profile_pic.url }}</a>
+        {{ profile_form | crispy }}
         <button type="submit" class="btn btn-outline-success">Update</button>
       </form>
     </div>
