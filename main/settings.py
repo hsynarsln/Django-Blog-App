@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     #! third party apps
     'crispy_forms',
+    'django_bootstrap_icons'
 ]
 
 MIDDLEWARE = [
@@ -137,4 +138,4 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-# AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.User'

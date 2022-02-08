@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %} {% load bootstrap_icons %} {% block content %}
+<center>
+  <h2>Clarusway Blog</h2>
+</center>
+
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card text-center">
+      <div class="card-header">Featured</div>
+      <img src="..." class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+      <div class="card-body">{% bs_icon 'chat-left' %} {% bs_icon 'eye-fill' %} {% bs_icon 'heart' %}</div>
+      <div class="card-footer text-muted">2 days ago</div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
