@@ -1,13 +1,49 @@
-{% extends 'blog/base.html' %} {% load bootstrap_icons %} {% block content %}
+{% extends 'blog/base.html' %} {% load static %} {% load bootstrap_icons %} {% block content %}
 <center>
-  <h2>Clarusway Blog</h2>
+  <h2 class="mb-3">Clarusway Blog</h2>
 </center>
 
 <div class="row">
-  <div class="col-sm-4">
+  <div class="col-sm-4 mb-3">
     <div class="card text-center">
       <div class="card-header">Featured</div>
-      <img src="..." class="card-img-top" alt="..." />
+      <img src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+      <div class="card-body">{% bs_icon 'chat-left' %} <span>2</span> {% bs_icon 'eye-fill' %} <span>51</span> {% bs_icon 'heart' %} <span>22</span></div>
+      <div class="card-footer text-muted">2 days ago</div>
+    </div>
+  </div>
+  <div class="col-sm-4 mb-3">
+    <div class="card text-center">
+      <div class="card-header">Featured</div>
+      <img src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+      <div class="card-body">{% bs_icon 'chat-left' %} {% bs_icon 'eye-fill' %} {% bs_icon 'heart' %}</div>
+      <div class="card-footer text-muted">2 days ago</div>
+    </div>
+  </div>
+  <div class="col-sm-4 mb-3">
+    <div class="card text-center">
+      <div class="card-header">Featured</div>
+      <img src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+      <div class="card-body">{% bs_icon 'chat-left' %} {% bs_icon 'eye-fill' %} {% bs_icon 'heart' %}</div>
+      <div class="card-footer text-muted">2 days ago</div>
+    </div>
+  </div>
+  <div class="col-sm-4 mb-3">
+    <div class="card text-center">
+      <div class="card-header">Featured</div>
+      <img src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
       <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

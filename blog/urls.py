@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import create_post, home
+from .views import create_post, post_list
 
 urlpatterns = [
-    path("", home, name="home"),
+    path("", post_list, name="home"),
     # path("todos/", todo_list, name="todo_list"),
     path("create", create_post, name="create_post"),
     # path("todo/update/<int:id>", todo_update, name="todo_update"),

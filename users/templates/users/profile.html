@@ -31,8 +31,11 @@
       <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %} {{ user_form | crispy }}
         <label class="big mb-1">Currently:</label>
+
+        {% if profile_form.instance.profile_pic %}
+
         <a href="{{ profile_form.instance.profile_pic.url }}">{{ profile_form.instance.profile_pic.url }}</a>
-        {{ profile_form | crispy }}
+        {% endif %} {{ profile_form | crispy }}
         <button type="submit" class="btn btn-outline-success">Update</button>
       </form>
     </div>
