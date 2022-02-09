@@ -1,7 +1,7 @@
 
 from django import forms
 
-from blog.models import Comment, Like, Post
+from blog.models import Comment, Like, Post, PostView
 
 
 class NewPostForm(forms.ModelForm):
@@ -19,4 +19,10 @@ class PostComment(forms.ModelForm):
 class LikePost(forms.ModelForm):
     class Meta:
         model = Like
+        fields = ()
+
+
+class PostView(forms.ModelForm):
+    class Meta:
+        model = PostView
         fields = ()

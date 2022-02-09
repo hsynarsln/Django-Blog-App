@@ -6,30 +6,36 @@
 <div class="row">
   {% for post in posts %}
   <div class="col-sm-4 mb-3">
-    <a href="{% url 'post_detail' post.id %}" style="text-decoration: none; color: black">
-      <div class="card text-center">
-        <div class="card-header">{{ post.user.username|title }} - {{ post.category }}</div>
+    {% comment %}
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %} {{ post_view_form }} {% endcomment %}
+      <a href="{% url 'post_detail' post.id %}" style="text-decoration: none; color: black">
+        <div class="card text-center">
+          <div class="card-header">{{ post.user.username|title }} - {{ post.category }}</div>
 
-        {% if post.image %}
+          {% if post.image %}
 
-        <img height="200rem" src="{{ post.image.url }}" class="card-img-top" alt="..." />
-        {% else %}
+          <img height="200rem" src="{{ post.image.url }}" class="card-img-top" alt="..." />
+          {% else %}
 
-        <img height="200rem" src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
-        {% endif %}
+          <img height="200rem" src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
+          {% endif %}
 
-        <div class="card-body">
-          <h5 class="card-title">{{ post.title|title }}</h5>
-          <p style="height: 3rem" class="card-text">{{ post.content|truncatewords:10 }}</p>
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title|title }}</h5>
+            <p style="height: 3rem" class="card-text">{{ post.content|truncatewords:10 }}</p>
+          </div>
+          <div style="height: 3rem" class="card-body d-flex align-items-center justify-content-center row">
+            <div class="col-4 row d-flex align-items-center">{% bs_icon 'chat-left' %} <span>&nbsp;9</span></div>
+            <div class="col-4 col-xs-4 row d-flex align-items-center">{% bs_icon 'eye-fill' %} <span>&nbsp;65</span></div>
+            <div class="col-4 col-xs-4 row d-flex align-items-center">{% bs_icon 'heart' %} <span>&nbsp;21</span></div>
+          </div>
+          <div class="card-footer text-muted">Published {{ post.last_updated|naturaltime }}</div>
         </div>
-        <div style="height: 3rem" class="card-body d-flex align-items-center justify-content-center row">
-          <div class="col-sm-4">{% bs_icon 'chat-left' %} <span>2</span></div>
-          <div class="col-sm-4">{% bs_icon 'eye-fill' %} <span>51</span></div>
-          <div class="col-sm-4">{% bs_icon 'heart' %} <span>22</span></div>
-        </div>
-        <div class="card-footer text-muted">Published {{ post.publish_date|naturaltime }}</div>
-      </div>
-    </a>
+      </a>
+      {% comment %}
+    </form>
+    {% endcomment %}
   </div>
   {% endfor %}
 </div>

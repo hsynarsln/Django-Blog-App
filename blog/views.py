@@ -8,14 +8,25 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 
 from blog.forms import LikePost, NewPostForm, PostComment
-from blog.models import Comment, Like, Post
+from blog.models import Comment, Like, Post, PostView
 
 
 # Create your views here.
 def post_list(request):
     posts = Post.objects.all()
+    # post_views = PostView.objects.count()
+    # for post in posts:
+    #     form = PostView()
+    #     if request.user.is_authenticated:
+    #         if form:
+    #             post_view = PostView()
+    #             post_view.user = request.user
+    #             post_view.post = post
+    #             post_view.save()
     context = {
-        "posts": posts
+        "posts": posts,
+        # "post_view_form": form,
+        # "post_views": post_views,
     }
     return render(request, 'blog/post_list.html', context)
 
@@ -32,7 +43,7 @@ def create_post(request):
             messages.success(request, 'Post added successfully')
             return redirect('home')
     context = {
-        'form': form
+        'form': form,
     }
     return render(request, 'blog/post_create.html', context)
 
@@ -56,15 +67,18 @@ def post_detail(request, id):
             messages.success(request, 'Comment added successfully')
             return redirect('post_detail', id=id)
         elif form_like.is_valid():
-            if likes.filter(user=request.user).exists():
-                pass
+            if request.user.is_authenticated:
+                if likes.filter(user=request.user).exists():
+                    pass
+                else:
+                    like = Like()
+                    like.user = request.user
+                    like.post = post
+                    like.save()
+                    messages.success(request, 'Post liked successfully')
+                return redirect('post_detail', id=id)
             else:
-                like = Like()
-                like.user = request.user
-                like.post = post
-                like.save()
-                messages.success(request, 'Post liked successfully')
-            return redirect('post_detail', id=id)
+                messages.error(request, 'Login required')
     context = {
         'post': post,
         'comment_form': form,
