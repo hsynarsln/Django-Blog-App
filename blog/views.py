@@ -20,7 +20,7 @@ def create_post(request):
     if request.method == "POST":
         form = NewPostForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save(commit=False)
+            form.save()
             return redirect('home')
     context = {
         'form': form

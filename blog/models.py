@@ -1,4 +1,3 @@
-
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -6,7 +5,8 @@ from django.db import models
 
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField()
     image = models.ImageField(
@@ -22,7 +22,12 @@ class Post(models.Model):
     ]
     category = models.CharField(
         max_length=4, choices=POST_CATEGORY_CHOICES, default='DJ')
-    status = models.BooleanField(default=False)
+    POST_STATUS_CHOICES = [
+        ('D', 'Draft'),
+        ('P', 'Published'),
+    ]
+    status = models.CharField(
+        max_length=1, choices=POST_STATUS_CHOICES, default='D')
     slug = models.SlugField(max_length=100, unique=True)
 
     def __str__(self):
@@ -30,12 +35,14 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.TextField()
     publish_date = models.DateTimeField(auto_now_add=True)
 
 
 class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
