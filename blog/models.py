@@ -28,7 +28,6 @@ class Post(models.Model):
     ]
     status = models.CharField(
         max_length=1, choices=POST_STATUS_CHOICES, default='D')
-    slug = models.SlugField(max_length=100, unique=True)
 
     def __str__(self):
         return f"{self.title}"

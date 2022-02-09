@@ -4,54 +4,33 @@
 </center>
 
 <div class="row">
+  {% for post in posts %}
   <div class="col-sm-4 mb-3">
-    <div class="card text-center">
-      <div class="card-header">Featured</div>
-      <img src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      </div>
-      <div class="card-body">{% bs_icon 'chat-left' %} <span>2</span> {% bs_icon 'eye-fill' %} <span>51</span> {% bs_icon 'heart' %} <span>22</span></div>
-      <div class="card-footer text-muted">2 days ago</div>
-    </div>
-  </div>
-  <div class="col-sm-4 mb-3">
-    <div class="card text-center">
-      <div class="card-header">Featured</div>
-      <img src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      </div>
-      <div class="card-body">{% bs_icon 'chat-left' %} {% bs_icon 'eye-fill' %} {% bs_icon 'heart' %}</div>
-      <div class="card-footer text-muted">2 days ago</div>
-    </div>
-  </div>
-  <div class="col-sm-4 mb-3">
-    <div class="card text-center">
-      <div class="card-header">Featured</div>
-      <img src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      </div>
-      <div class="card-body">{% bs_icon 'chat-left' %} {% bs_icon 'eye-fill' %} {% bs_icon 'heart' %}</div>
-      <div class="card-footer text-muted">2 days ago</div>
-    </div>
-  </div>
-  <div class="col-sm-4 mb-3">
-    <div class="card text-center">
-      <div class="card-header">Featured</div>
-      <img src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      </div>
-      <div class="card-body">{% bs_icon 'chat-left' %} {% bs_icon 'eye-fill' %} {% bs_icon 'heart' %}</div>
-      <div class="card-footer text-muted">2 days ago</div>
-    </div>
-  </div>
-</div>
+    <a href="{% url 'post_detail' post.id %}" style="text-decoration: none; color: black">
+      <div class="card text-center">
+        <div class="card-header">{{ post.user.username }} - {{ post.category }}</div>
 
+        {% if post.image %}
+
+        <img height="200rem" src="{{ post.image.url }}" class="card-img-top" alt="..." />
+        {% else %}
+
+        <img height="200rem" src="{% static 'blog/images/default.png' %}" class="card-img-top" alt="..." />
+        {% endif %}
+
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p style="height: 3rem" class="card-text">{{ post.content|truncatewords:10 }}</p>
+        </div>
+        <div style="height: 3rem" class="card-body d-flex align-items-center justify-content-center row">
+          <div class="col-sm-4">{% bs_icon 'chat-left' %} <span>2</span></div>
+          <div class="col-sm-4">{% bs_icon 'eye-fill' %} <span>51</span></div>
+          <div class="col-sm-4">{% bs_icon 'heart' %} <span>22</span></div>
+        </div>
+        <div class="card-footer text-muted">Published {{ post.publish_date }}</div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
 {% endblock content %}

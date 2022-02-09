@@ -18,8 +18,8 @@
         <img width="100rem" style="border-radius: 50%" src="{{ profile_form.instance.profile_pic.url }}" />
         {% else %}
         <img width="200rem" src="{% static 'blog/images/default.png' %}" class="rounded" alt="User" />
+        {% endif %}
       </dt>
-      {% endif %}
 
       <dd class="col-sm-8 display-1">{{ user.username }}</dd>
     </dl>
