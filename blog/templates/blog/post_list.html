@@ -1,4 +1,4 @@
-{% extends 'blog/base.html' %} {% load static %} {% load bootstrap_icons %} {% block content %}
+{% extends 'blog/base.html' %} {% load static %} {% load bootstrap_icons %} {% load humanize %} {% block content %}
 <center>
   <h2 class="mb-3">Clarusway Blog</h2>
 </center>
@@ -8,7 +8,7 @@
   <div class="col-sm-4 mb-3">
     <a href="{% url 'post_detail' post.id %}" style="text-decoration: none; color: black">
       <div class="card text-center">
-        <div class="card-header">{{ post.user.username }} - {{ post.category }}</div>
+        <div class="card-header">{{ post.user.username|title }} - {{ post.category }}</div>
 
         {% if post.image %}
 
@@ -19,7 +19,7 @@
         {% endif %}
 
         <div class="card-body">
-          <h5 class="card-title">{{ post.title }}</h5>
+          <h5 class="card-title">{{ post.title|title }}</h5>
           <p style="height: 3rem" class="card-text">{{ post.content|truncatewords:10 }}</p>
         </div>
         <div style="height: 3rem" class="card-body d-flex align-items-center justify-content-center row">
@@ -27,7 +27,7 @@
           <div class="col-sm-4">{% bs_icon 'eye-fill' %} <span>51</span></div>
           <div class="col-sm-4">{% bs_icon 'heart' %} <span>22</span></div>
         </div>
-        <div class="card-footer text-muted">Published {{ post.publish_date }}</div>
+        <div class="card-footer text-muted">Published {{ post.publish_date|naturaltime }}</div>
       </div>
     </a>
   </div>
