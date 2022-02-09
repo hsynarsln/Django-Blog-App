@@ -1,10 +1,11 @@
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 
 from blog.forms import NewPostForm, PostComment
-from blog.models import Post
+from blog.models import Comment, Post
 
 
 # Create your views here.
@@ -35,14 +36,8 @@ def create_post(request):
 
 def post_detail(request, id):
     post = Post.objects.get(id=id)
-    context = {
-        'post': post,
-    }
-    return render(request, "blog/post_detail.html", context)
-
-
-def send_comment(request, id):
-    post = Post.objects.get(id=id)
+    comments = Comment.objects.filter(post=post)
+    form = PostComment()
     if request.method == "POST":
         form = PostComment(request.POST)
         if form.is_valid():
@@ -53,9 +48,25 @@ def send_comment(request, id):
             messages.success(request, 'Comment added successfully')
             return redirect('post_detail', id=id)
     context = {
+        'post': post,
         'comment_form': form,
+        "comments": comments,
     }
     return render(request, "blog/post_detail.html", context)
+
+
+# def send_comment(request):
+#     form = PostComment()
+#     if request.method == "POST":
+#         form = PostComment(request.POST)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             comment.post = request.post
+#             comment.user = request.user
+#             comment.save()
+#             messages.success(request, 'Comment added successfully')
+#             return redirect('post_detail', id=id)
+#     return render(request, 'blog/post_list.html')
 
 
 def post_update(request, id):

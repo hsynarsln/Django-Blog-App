@@ -1,4 +1,4 @@
-{% extends 'blog/base.html' %} {% block content %} {% load static %} {% load bootstrap_icons %} {% load crispy_forms_tags %} {% if comment_form.errors %}
+{% extends 'blog/base.html' %} {% block content %} {% load static %} {% load humanize %} {% load bootstrap_icons %} {% load crispy_forms_tags %} {% if comment_form.errors %}
 <div class="alert alert-danger alert-dismissible" role="alert">
   <div id="form_errors">
     {% for key, value in comment_form.errors.items %}
@@ -10,18 +10,18 @@
   </button>
 </div>
 {% endif %}
-<div class="card" style="padding: 1rem">
+<div class="card" style="padding: 1rem; width: 70%; margin: auto">
   <div class="card-body">
     <dl class="row">
       <dt class="col-sm-4">
-        <img width="100rem" src="{{ post.image.url }}" />
+        <img width="200rem" src="{{ post.image.url }}" />
       </dt>
 
-      <dd class="col-sm-8 display-1">{{ post.category }}</dd>
+      <dd class="col-sm-8 display-1 d-flex align-items-center">{{ post.title }}</dd>
     </dl>
 
     <br />
-    <h3>{{ post.title }}</h3>
+    <h5>{{ post.category }}</h5>
     <hr />
     <div style="height: 3rem" class="card-body d-flex align-items-center justify-content-space-between row">
       <div class="col-sm-8 row">
@@ -44,14 +44,25 @@
     <div class="form-content">
       <h5>Leave a comment below</h5>
       <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %} {{ content_form | crispy }}
-
+        {% csrf_token %} {{ comment_form|crispy }}
         <button type="submit" class="btn btn-outline-success">SEND</button>
       </form>
     </div>
     <hr />
     <div class="card-body">
       <h5 class="card-title">Comments</h5>
+
+      {% for comment in comments %}
+      <div class="list-group">
+        <div class="list-group-item list-group-item-action" aria-current="true">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ comment.user.username }}</h5>
+            <small>{{ comment.publish_date|naturaltime }}</small>
+          </div>
+          <p class="mb-1">{{ comment.content }}</p>
+        </div>
+      </div>
+      {% endfor %}
     </div>
     {% endif %}
 
