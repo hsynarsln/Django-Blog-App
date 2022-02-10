@@ -10,10 +10,10 @@
   </button>
 </div>
 {% endif %}
-<div class="card" style="padding: 1rem">
+<div class="card" style="padding: 1rem; max-width: 40rem; margin: auto">
   <div class="card-body">
     <dl class="row">
-      <dt class="col-sm-4">
+      <dt class="col-4">
         {% if profile_form.instance.profile_pic %}
         <img width="100rem" style="border-radius: 50%" src="{{ profile_form.instance.profile_pic.url }}" />
         {% else %}
@@ -21,11 +21,11 @@
         {% endif %}
       </dt>
 
-      <dd class="col-sm-8 display-1">{{ user.username }}</dd>
+      <dd class="col-8 display-4 text-justify">{{ user.username|upper }}</dd>
     </dl>
 
     <br />
-    <h3>Profile</h3>
+    <p class="h5">Profile</p>
     <hr />
     <div class="form-content">
       <form action="" method="post" enctype="multipart/form-data">
