@@ -26,7 +26,17 @@ def post_list(request):
     return render(request, 'blog/post_list.html', context)
 
 
-@login_required
+def post_view(request, id):
+    post = Post.objects.get(id=id)
+    if request.user.is_authenticated:
+        view = PostView()
+        view.post = post
+        view.user = request.user
+        view.save()
+    return redirect('post_detail', id=id)
+
+
+@ login_required
 def create_post(request):
     form = NewPostForm()
     if request.method == "POST":
@@ -49,11 +59,6 @@ def post_detail(request, id):
     comments_count = comments.count()
     likes = Like.objects.filter(post=post)
     likes_count = likes.count()
-    if request.user.is_authenticated:
-        view = PostView()
-        view.post = post
-        view.user = request.user
-        view.save()
     post_views = PostView.objects.filter(post=post)
     post_view_count = post_views.count()
     form = PostComment()
