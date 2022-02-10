@@ -28,11 +28,12 @@
 
     <br />
     <h5>{{ post.category }}</h5>
+    <p>{{ post.content }}</p>
     <hr />
     <div style="height: 3rem" class="card-body d-flex align-items-center justify-content-center row">
       <div class="col-7 row">
         <div class="col-4 row d-flex align-items-center row">{% bs_icon 'chat-left' %} <span>&nbsp;{{ comments_count }}</span></div>
-        <div class="col-4 row d-flex align-items-center row">{% bs_icon 'eye-fill' %} <span>&nbsp;51</span></div>
+        <div class="col-4 row d-flex align-items-center row">{% bs_icon 'eye-fill' %} <span>&nbsp;{{ post_views }}</span></div>
         <div class="col-4 row d-flex align-items-center row">{% bs_icon 'heart' %} <span>&nbsp;{{ likes_count }}</span></div>
       </div>
       <div class="col-5">

@@ -20,9 +20,3 @@ class LikePost(forms.ModelForm):
     class Meta:
         model = Like
         fields = ()
-
-
-class PostView(forms.ModelForm):
-    class Meta:
-        model = PostView
-        fields = ()

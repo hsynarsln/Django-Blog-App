@@ -14,19 +14,14 @@ from blog.models import Comment, Like, Post, PostView
 # Create your views here.
 def post_list(request):
     posts = Post.objects.all()
-    # post_views = PostView.objects.count()
-    # for post in posts:
-    #     form = PostView()
-    #     if request.user.is_authenticated:
-    #         if form:
-    #             post_view = PostView()
-    #             post_view.user = request.user
-    #             post_view.post = post
-    #             post_view.save()
+    comments = Comment.objects.all()
+    likes = Like.objects.all()
+    post_views = PostView.objects.all()
     context = {
         "posts": posts,
-        # "post_view_form": form,
-        # "post_views": post_views,
+        "comments": comments,
+        "likes": likes,
+        "post_views": post_views,
     }
     return render(request, 'blog/post_list.html', context)
 
@@ -54,6 +49,13 @@ def post_detail(request, id):
     comments_count = comments.count()
     likes = Like.objects.filter(post=post)
     likes_count = likes.count()
+    if request.user.is_authenticated:
+        view = PostView()
+        view.post = post
+        view.user = request.user
+        view.save()
+    post_views = PostView.objects.filter(post=post)
+    post_view_count = post_views.count()
     form = PostComment()
     form_like = LikePost()
     if request.method == "POST":
@@ -86,6 +88,7 @@ def post_detail(request, id):
         "comments_count": comments_count,
         "likes_count": likes_count,
         "like_form": form_like,
+        'post_views': post_view_count,
     }
     return render(request, "blog/post_detail.html", context)
 
