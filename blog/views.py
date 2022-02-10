@@ -13,7 +13,7 @@ from blog.models import Comment, Like, Post, PostView
 
 # Create your views here.
 def post_list(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-publish_date')
     comments = Comment.objects.all()
     likes = Like.objects.all()
     post_views = PostView.objects.all()
@@ -93,58 +93,19 @@ def post_detail(request, id):
     return render(request, "blog/post_detail.html", context)
 
 
-# def post_like(request, id):
-#     post = Post.objects.get(id=id)
-#     likes = Like.objects.filter(post=post)
-#     form = LikePost()
-#     if request.method == "POST":
-#         form = LikePost(request.POST)
-#         if request.user.is_authenticated:
-#             if request.POST.get('liked') == 'True':
-#                 if likes.filter(user=request.user).exists():
-#                     pass
-#                 else:
-#                     like = Like()
-#                     like.user = request.user
-#                     like.post = post
-#                     like.save()
-#                     messages.success(request, 'Post liked successfully')
-#             else:
-#                 if likes.filter(user=request.user).exists():
-#                     like = Like.objects.get(post=post, user=request.user)
-#                     like.delete()
-#                     messages.success(request, 'Post unliked successfully')
-#                 else:
-#                     pass
-#     context = {
-#         "like_form": form,
-#     }
-#     return render(request, "blog/post_detail.html", context)
-
-
-# def send_comment(request):
-#     form = PostComment()
-#     if request.method == "POST":
-#         form = PostComment(request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.post = request.post
-#             comment.user = request.user
-#             comment.save()
-#             messages.success(request, 'Comment added successfully')
-#             return redirect('post_detail', id=id)
-#     return render(request, 'blog/post_list.html')
-
-
 def post_update(request, id):
     post = Post.objects.get(id=id)
     form = NewPostForm(instance=post)
-    if request.method == "POST":
-        form = NewPostForm(request.POST, request.FILES, instance=post)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Post updated successfully')
-            return redirect('post_detail', id=id)
+    if post.user == request.user:
+        if request.method == "POST":
+            form = NewPostForm(request.POST, request.FILES, instance=post)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Post updated successfully')
+                return redirect('post_detail', id=id)
+    else:
+        messages.error(request, 'You are not allowed to update this post')
+        return redirect('post_detail', id=id)
     context = {
         'update_form': form,
     }
@@ -153,10 +114,14 @@ def post_update(request, id):
 
 def post_delete(request, id):
     post = Post.objects.get(id=id)
-    if request.method == "POST":
-        post.delete()
-        messages.success(request, 'Post deleted successfully')
-        return redirect('home')
+    if post.user == request.user:
+        if request.method == "POST":
+            post.delete()
+            messages.success(request, 'Post deleted successfully')
+            return redirect('home')
+    else:
+        messages.error(request, 'You are not allowed to delete this post')
+        return redirect('post_detail', id=id)
     context = {
         "post": post,
     }
