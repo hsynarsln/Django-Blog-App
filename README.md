@@ -1,4 +1,3 @@
-# Django-Blog-App
 <!-- Please update value in the {}  -->
 
 <h1 align="center">BLOG App</h1>
